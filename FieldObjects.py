@@ -66,8 +66,10 @@ class Valve:
                 self.opn_ind = True
                 self.cls_ind = False
 
+class Valve_Analog:
 
-
+    def __init__(self, valve_name, valve_sp_tag, plc_address):
+        pass
 
 class Tank:
 
