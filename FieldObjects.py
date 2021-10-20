@@ -6,10 +6,12 @@ class Valve:
     def __init__(self, valve_name, energise_cmd_tag, opn_ind_ls_tag, cls_ind_ls_tag, plc_address, nc_valve=False):
         """
 
+
         :param valve_name:
         :param energise_cmd_tag:
         :param opn_ind_ls_tag:
         :param cls_ind_ls_tag:
+        :param plc_address:
         :param plc_address:
         :param nc_valve:
         """
@@ -26,27 +28,34 @@ class Valve:
         self.close_ind_tag = cls_ind_ls_tag
         self.plc_address = plc_address
 
-    def update(self):
+
+        # self.plc = LogixDriver(self.plc_address)
+        # self.plc.open()
+
+    def update(self, plc):
         # Read data from PLC
-        self._read_from_plc()
+        self._read_from_plc(plc)
 
         # Process Data
         self.energise(self.energise_cmd)
 
         # Write data back to PLC
-        self._write_to_plc()
+        self._write_to_plc(plc)
 
-    def _read_from_plc(self):
+    def _read_from_plc(self,plc: LogixDriver):
 
         # Take all data in
-        with LogixDriver(self.plc_address) as plc:
-            self.energise_cmd = plc.read(self.energise_cmd_tag).value
+        # with LogixDriver(self.plc_address) as plc:
+        #     self.energise_cmd = plc.read(self.energise_cmd_tag).value
+        self.energise_cmd = plc.read(self.energise_cmd_tag).value
 
-    def _write_to_plc(self):
+    def _write_to_plc(self,plc: LogixDriver):
 
-        with LogixDriver(self.plc_address) as plc:
-            plc.write(self.open_ind_tag, self.opn_ind)
-            plc.write(self.close_ind_tag, self.cls_ind)
+        # with LogixDriver(self.plc_address) as plc:
+        #     plc.write(self.open_ind_tag, self.opn_ind)
+        #     plc.write(self.close_ind_tag, self.cls_ind)
+        plc.write(self.open_ind_tag, self.opn_ind)
+        plc.write(self.close_ind_tag, self.cls_ind)
 
     def energise(self, command):
 
