@@ -1,2 +1,2 @@
-pycomm3~=1.2.1
-pandas~=1.3.3
+pycomm3==1.2.1
+pandas==1.3.3
